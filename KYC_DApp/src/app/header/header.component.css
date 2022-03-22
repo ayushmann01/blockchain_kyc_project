@@ -1,0 +1,30 @@
+
+header {
+    background-color: #342c29;
+    font-size: 20px;
+}
+
+
+nav ul {
+    list-style: none;
+}
+
+.branding {
+    text-decoration: none;
+    color: lightgreen;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+    margin-right: 30px;
+}
+
+.nav-link:hover {
+    color: dodgerblue !important;
+    transition: 0.5s;
+}
+
+.active {
+    color: dodgerblue;
+}
