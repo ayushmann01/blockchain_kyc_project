@@ -3,3 +3,8 @@ footer {
     position: fixed;
     bottom: 0;
 }
+
+.bg-light-blue {
+    background-color: #3c65b1 !important;
+    
+}

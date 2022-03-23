@@ -4,6 +4,10 @@ header {
     font-size: 20px;
 }
 
+.bg-light-blue {
+    background-color: #3c65b1 !important;
+    
+}
 
 nav ul {
     list-style: none;
@@ -11,20 +15,21 @@ nav ul {
 
 .branding {
     text-decoration: none;
-    color: lightgreen;
+    color: orange;
 }
 
 .nav-link {
     text-decoration: none;
     color: white;
     margin-right: 30px;
+    cursor: pointer;
 }
 
 .nav-link:hover {
-    color: dodgerblue !important;
+    color: orange !important;
     transition: 0.5s;
 }
 
 .active {
-    color: dodgerblue;
+    color: orange;
 }
