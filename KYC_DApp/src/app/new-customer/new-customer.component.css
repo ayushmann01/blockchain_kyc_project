@@ -1,0 +1,27 @@
+#new_customer {
+    margin-top: 10%;
+    margin-top: 10%;
+}
+
+input,  select {
+    margin-left: 10px;
+    box-sizing: content-box;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 1rem; 
+    width: 100%;
+}
+
+.sidebar ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sidebar {
+    font-size: 18px;
+    font-weight: bold;
+}
