@@ -15,6 +15,8 @@ contract userInfo{
          
     }
 
+    userDetails public client;
+
     mapping(uint=>userDetails) public data;
 
     function setter(uint aadhar,string memory _fName,string memory _lName,string memory _father,string memory _dob,string memory _pan,uint _contact,string memory _adrs) public{
