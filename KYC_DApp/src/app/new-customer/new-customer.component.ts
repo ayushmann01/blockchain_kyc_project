@@ -21,7 +21,7 @@ export class NewCustomerComponent implements OnInit {
 
   // web3Service = new Web3ServiceService();
 
-  constructor() {
+  constructor(private web3Servide: Web3ServiceService) {
     
    }
 
@@ -44,7 +44,18 @@ export class NewCustomerComponent implements OnInit {
       this.mobile_no
     );
 
+    this.openMetaMask();
+    this.web3Servide.getClient().then(res => {
+      console.log(res.name);
+    });
+
     this.change('documents');
+  }
+
+  openMetaMask() {
+    this.web3Servide.openMetamask().then((res) => {
+      console.log('metamask runs: ', res );
+    });
   }
 
 }
