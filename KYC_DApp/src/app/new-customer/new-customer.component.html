@@ -148,7 +148,7 @@
               required
             />
 
-            <button class="btn btn-success" (click)="this.change('preview')" [disabled]="documentForm.invalid">
+            <button class="btn btn-success" (click)="this.submitDocuments()" (click)="this.change('preview')" [disabled]="documentForm.invalid">
               Next
             </button>
             <button class="btn btn-secondary mx-1">Reset</button>

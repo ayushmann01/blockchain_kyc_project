@@ -134,8 +134,9 @@ declare const window: any;
 @Injectable({
   providedIn: 'root'
 })
-export class Web3ServiceService {
+export class Web3Service {
   window: any;
+
   constructor() { }
   private getAccounts = async () => {
     try {
@@ -147,21 +148,52 @@ export class Web3ServiceService {
 
   public getClient = async () => {
     try {
-            const contract = new window.web3.eth.Contract(
-                ABI,
-                contractAddress,
-            );
-            const token = await contract.methods.getClient().call();
-            console.log("token",token)
-            return token
-        
+      const contract = new window.web3.eth.Contract(
+        ABI,
+        contractAddress,
+      );
+      const token = await contract.methods.getClient().call();
+      console.log("token", token)
+      return token
+
     }
     catch (error: any) {
-        const errorMessage = error.message;
-        console.log(errorMessage)
-   
+      const errorMessage = error.message;
+      console.log(errorMessage)
+
     }
-}
+  }
+
+  public setClient = async () => {
+    try {
+      const contract = new window.web3.eth.Contract(
+        ABI,
+        contractAddress,
+      );
+      const token = await contract.methods.setClient('ayushman').send({from: String(window.web3.eth.defaultAccount)})
+      .on('transactionHash', function (hash: any) {
+          console.log(hash);
+       })
+        .on('receipt', function (receipt: any) {
+          console.log(receipt);
+        })
+        .on('confirmation', function (confirmationNumber: any, receipt: any) {
+          console.log(confirmationNumber, receipt);
+        })
+        .on('error', function (error: any, receipt: any) {
+              console.error(error);
+        });
+
+      console.log("token", token)
+      return token
+
+    }
+    catch (error: any) {
+      const errorMessage = error.message;
+      console.log(errorMessage)
+
+    }
+  }
 
   public openMetamask = async () => {
     window.web3 = new Web3(window.ethereum);
@@ -170,6 +202,7 @@ export class Web3ServiceService {
     if (!addresses.length) {
       try {
         addresses = await window.ethereum.enable();
+        window.web3.eth.defaultAccount = addresses[0];
       } catch (e) {
         return false;
       }
