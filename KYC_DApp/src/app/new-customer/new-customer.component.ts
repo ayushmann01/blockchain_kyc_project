@@ -63,7 +63,7 @@ export class NewCustomerComponent implements OnInit {
     console.log('isAdhaarValid:', this.validAdhar)
 
     this.web3Servide.setUserKyc(Number(this.adhaar_no), this.firstName, this.lastname, this.fatherName, String(this.dob), this.pan_no, Number(this.mobile_no), "no address").then(res => {
-      this.web3Servide.getUserKyc().then((res: any) => {
+      this.web3Servide.getUserKyc(this.adhaar_no).then((res: any) => {
         this.firstName = res.fName;
         this.lastname = res.lname;
         this.dob = res.dob;

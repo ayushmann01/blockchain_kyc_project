@@ -2,20 +2,20 @@
 
 <header class="w-100 bg-light-blue">
     <nav class="d-flex justify-content-evenly">
-            <a class="branding text-orange fw-bold h1">B-KYC</a>
+            <a class="branding text-orange fw-bold h1">E-KYC</a>
 
             <ul class=" my-auto d-flex justify-content-between">
                 <li class="nav-item ">
-                    <a class="nav-link active">New KYC</a>
+                    <a class="nav-link" routerLink="/newCustomer" [class.active] = "this.selected === 'newKyc'" (click)="this.selected = 'newKyc'">New KYC</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">Add Customer</a>
+                    <a class="nav-link" [class.active] = "this.selected === 'addCustomer'" (click)="this.selected = 'addCustomer'">Add Customer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/existingCustomer">Find Customer</a>
+                    <a class="nav-link" [class.active] = "this.selected === 'existingCustomer'" (click)="this.selected = 'existingCustomer'" routerLink="/existingCustomer">Find Customer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">Request</a>
+                    <a class="nav-link" [class.active] = "this.selected === 'request'" (click)="this.selected = 'request'">Request</a>
                 </li>
             </ul>
     </nav>

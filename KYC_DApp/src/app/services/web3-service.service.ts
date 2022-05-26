@@ -196,13 +196,13 @@ export class Web3Service {
   }
 
   
-  public getUserKyc = async () => {
+  public getUserKyc = async (adhaar_no: any) => {
     try {
       const contract = new window.web3.eth.Contract(
         ABI,
         contractAddress,
       );
-      const token = await contract.methods.data(242656232914).call();
+      const token = await contract.methods.data(String(adhaar_no)).call();
       console.log("token", token)
       return token
 
