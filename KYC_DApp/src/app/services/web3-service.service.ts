@@ -164,6 +164,57 @@ export class Web3Service {
     }
   }
 
+  public setUserKyc = async (adhaar_no: number,firstName: string,lastname: string,fatherName: string,dob: string,pan_no: string,mobile_no: number,addss: string) => {
+    try {
+      const contract = new window.web3.eth.Contract(
+        ABI,
+        contractAddress,
+      );
+      const token = await contract.methods.setter(adhaar_no, firstName, lastname, fatherName, dob, pan_no, mobile_no, addss)
+      .send({from: String(window.web3.eth.defaultAccount)})
+      .on('transactionHash', function (hash: any) {
+          console.log(hash);
+       })
+        .on('receipt', function (receipt: any) {
+          console.log(receipt);
+        })
+        .on('confirmation', function (confirmationNumber: any, receipt: any) {
+          console.log(confirmationNumber, receipt);
+        })
+        .on('error', function (error: any, receipt: any) {
+              console.error(error);
+        });
+
+      console.log("token", token)
+      return token
+    }
+    catch (error: any) {
+      const errorMessage = error.message;
+      console.log(errorMessage)
+
+    }
+  }
+
+  
+  public getUserKyc = async () => {
+    try {
+      const contract = new window.web3.eth.Contract(
+        ABI,
+        contractAddress,
+      );
+      const token = await contract.methods.data(242656232914).call();
+      console.log("token", token)
+      return token
+
+    }
+    catch (error: any) {
+      const errorMessage = error.message;
+      console.log(errorMessage)
+
+    }
+  }
+
+
   public setClient = async () => {
     try {
       const contract = new window.web3.eth.Contract(
@@ -186,7 +237,6 @@ export class Web3Service {
 
       console.log("token", token)
       return token
-
     }
     catch (error: any) {
       const errorMessage = error.message;
@@ -199,10 +249,10 @@ export class Web3Service {
     window.web3 = new Web3(window.ethereum);
     let addresses = await this.getAccounts();
     console.log("service", addresses)
+    window.web3.eth.defaultAccount = addresses[0];
     if (!addresses.length) {
       try {
         addresses = await window.ethereum.enable();
-        window.web3.eth.defaultAccount = addresses[0];
       } catch (e) {
         return false;
       }

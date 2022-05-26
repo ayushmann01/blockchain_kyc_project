@@ -7,13 +7,15 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NewCustomerComponent } from './new-customer/new-customer.component';
 import { FormsModule } from '@angular/forms';
+import { ExistingCustomerComponent } from './existing-customer/existing-customer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    NewCustomerComponent
+    NewCustomerComponent,
+    ExistingCustomerComponent
   ],
   imports: [
     BrowserModule,

@@ -19,6 +19,8 @@ export class NewCustomerComponent implements OnInit {
   adhaar_no!: string;
   pan_no!: string;
 
+  validAdhar !: boolean;
+
   // web3Service = new Web3ServiceService();
 
   constructor(private web3Servide: Web3Service) {
@@ -44,9 +46,9 @@ export class NewCustomerComponent implements OnInit {
       this.mobile_no
     );
 
-    this.web3Servide.setClient().then(res => {
-      console.log(res);
-    });
+    // this.web3Servide.setClient().then(res => {
+    //   console.log(res);
+    // });
 
     this.change('documents');
   }
@@ -54,19 +56,28 @@ export class NewCustomerComponent implements OnInit {
 
   submitDocuments() {
     console.log(this.adhaar_no, this.pan_no);
-  }
+
+    this.validAdhar = VerhoeffAlgorithm.validateAadharNumber(this.adhaar_no + '');
 
 
-  openMetaMask() {
-    this.web3Servide.openMetamask().then((res) => {
-      console.log('metamask runs: ', res);
+    console.log('isAdhaarValid:', this.validAdhar)
+
+    this.web3Servide.setUserKyc(Number(this.adhaar_no), this.firstName, this.lastname, this.fatherName, String(this.dob), this.pan_no, Number(this.mobile_no), "no address").then(res => {
+      this.web3Servide.getUserKyc().then((res: any) => {
+        this.firstName = res.fName;
+        this.lastname = res.lname;
+        this.dob = res.dob;
+        this.pan_no = res.pan;
+        this.mobile_no = res.contact;
+        this.change('preview');
+      })
     });
   }
 
 }
 
 class VerhoeffAlgorithm {
-  d =
+  static d =
     [
       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
@@ -79,7 +90,7 @@ class VerhoeffAlgorithm {
       [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
       [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
     ];
-  p =
+  static p =
     [
       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
@@ -90,30 +101,39 @@ class VerhoeffAlgorithm {
       [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
       [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
     ];
-  inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
+  static inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
 
-  validateVerhoeff(num: string) {
+  static validateVerhoeff(num: string) {
     var c = 0;
-    const myArray = this.StringToReversedIntArray(num);
+    const myArray = VerhoeffAlgorithm.StringToReversedIntArray(num);
     for (var i = 0; i < myArray.length; i++) {
-      c = this.d[c][this.p[(i % 8)][myArray[i]]];
+      c = VerhoeffAlgorithm.d[c][VerhoeffAlgorithm.p[(i % 8)][myArray[i]]];
     }
 
     return (c == 0);
   }
-  private StringToReversedIntArray(num: string) {
+  private static StringToReversedIntArray(num: string) {
     var myArray = [];
     for (var i = 0; i < num.length; i++) {
       myArray[i] = parseInt(num.substring(i, i + 1));
     }
-    myArray = this.Reverse(myArray);
+    myArray = VerhoeffAlgorithm.Reverse(myArray);
     return myArray;
   }
-  private Reverse(myArray: any) {
+  private static Reverse(myArray: any) {
     var reversed = [];
     for (var i = 0; i < myArray.length; i++) {
       reversed[i] = myArray[myArray.length - (i + 1)];
     }
     return reversed;
+  }
+
+  public static validateAadharNumber(aadharNumber: string) {
+    // Pattern aadharPattern = Pattern.compile("\\d{12}");
+    // boolean isValidAadhar = aadharPattern.matcher(aadharNumber).matches();
+    // if(isValidAadhar){
+    const isValidAadhar = VerhoeffAlgorithm.validateVerhoeff(aadharNumber);
+    // }
+    return isValidAadhar;
   }
 }
